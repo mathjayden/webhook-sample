@@ -11,6 +11,12 @@ const { Console } = require("console");
 // get fs module for creating write streams
 const fs = require("fs");
 
+// make a new logger
+const myLogger = new Console({
+  stdout: fs.createWriteStream("normalStdout.txt"),
+  stderr: fs.createWriteStream("errStdErr.txt"),
+});
+
 app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
@@ -73,11 +79,5 @@ app.post('/webhook', (req, res) => {
     res.json(response)
   }
 })
-
-// make a new logger
-const myLogger = new Console({
-  stdout: fs.createWriteStream("normalStdout.txt"),
-  stderr: fs.createWriteStream("errStdErr.txt"),
-});
 
 app.listen(port, () => console.log(`Zoom Webhook sample listening on port ${port}!`))
