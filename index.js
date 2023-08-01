@@ -6,6 +6,11 @@ const crypto = require('crypto')
 const app = express()
 const port = process.env.PORT || 4000
 
+// get the Console class
+const { Console } = require("console");
+// get fs module for creating write streams
+const fs = require("fs");
+
 app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
@@ -48,7 +53,7 @@ app.post('/webhook', (req, res) => {
       res.status(response.status)
       res.json(response.message)
     } else {
-      response = { message: 'Authorized request to Zoom Webhook sample.', status: 200 }
+      response = { message: 'Authorized request to Zoom Incoming Webhook.', status: 200 }
 
       console.log(response.message)
 
@@ -68,5 +73,11 @@ app.post('/webhook', (req, res) => {
     res.json(response)
   }
 })
+
+// make a new logger
+const myLogger = new Console({
+  stdout: fs.createWriteStream("normalStdout.txt"),
+  stderr: fs.createWriteStream("errStdErr.txt"),
+});
 
 app.listen(port, () => console.log(`Zoom Webhook sample listening on port ${port}!`))
