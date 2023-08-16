@@ -60,7 +60,7 @@ app.post('/webhook', (req, res) => {
     } else {
       response = { message: 'Authorized request to Zoom Incoming Webhook.', status: 200 }
 
-      console.log(response.message)
+       console.log(JSON.parse(JSON.stringify(response.message)));
 
       res.status(response.status)
       res.json(response)
